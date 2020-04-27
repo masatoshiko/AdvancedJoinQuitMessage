@@ -1,5 +1,4 @@
-# RandomJQMessage
-RandomJ(oin)Q(uit)Message
+# RandomJQMessage | RandomJoinQuitMessage
 (PMMPプラグイン)プレイヤーがサーバーに来た・去った時に表示されるメッセージをランダムに表示します。
 
 # 使い方
