@@ -1,5 +1,5 @@
 # RandomJQMessage | RandomJoinQuitMessage
-(PMMPプラグイン)プレイヤーがサーバーに来た・去った時に表示されるメッセージをランダムに表示します。
+(PMMPプラグイン)プレイヤーがサーバーに入室・退室した時に表示されるメッセージをランダムに表示します。
 
 # 使い方
 1. [ここからダウンロードして下さい。](https://github.com/masatoshiko/RandomJQMessage/releases/download/v1.0/RandomJQMessage.phar)
