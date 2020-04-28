@@ -18,11 +18,11 @@
             // ファイルチェック
             if (!file_exists(($this->getDataFolder()."joinmessages.txt"))){
                 touch($this->getDataFolder()."joinmessages.txt");
-                print("joinmessages.txtを生成しました。");
+                print("[RandomJQMessage] joinmessages.txtを生成しました。\n");
             }
             if (!file_exists(($this->getDataFolder()."quitmessages.txt"))){
                 touch($this->getDataFolder()."quitmessages.txt");
-                print("quitmessages.txtを生成しました。");
+                print("[RandomJQMessage] quitmessages.txtを生成しました。");
             }
         }
           
