@@ -20,9 +20,7 @@ quitmessages.txtは、プレイヤーがサーバーから退室した時に表�
 Minecraftデフォルトのメッセージでいい場合は、txtファイルを空にして下さい。
 
 ## 特殊文字
-- %player … この文字は、メッセージ表示時にプレイヤー名に置き換えられます。
-- § … Minecraftの装飾がそのまま使用できます。
-- 日付類の特殊文字は、[ここを御覧ください。]()
+[こちらを御覧ください。](https://github.com/masatoshiko/AdvancedJoinQuitMessage/blob/master/SPESIAL_CHARACTERS.md)
 
 ## 例
 joinmessages.txt:
