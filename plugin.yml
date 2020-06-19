@@ -1,0 +1,7 @@
+name: RandomJQMessage
+main: masatoshiko\RandomJQMessage\main
+version: 1.0.1
+api:
+- 3.0.0
+description: 入室・退出のメッセージを変更できるプラグインです
+author: masatoshiko
