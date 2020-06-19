@@ -1,5 +1,5 @@
 <?php
-    namespace masatoshiko\RandomJQMessage;
+    namespace masatoshiko\AdvancedJoinQuitMessage;
 
     use pocketmine\Player;
     use pocketmine\Server;
@@ -19,23 +19,23 @@
             // ファイルチェック
             if (!file_exists(($this->getDataFolder()."config.yml"))){
                 new Config($this->getDataFolder()."config.yml", Config::YAML, array(
-                    "timezone" => "UTC",
+                    "timezone" => "GMT+0",
                 ));
             }
 
             if (!file_exists(($this->getDataFolder()."joinmessages.txt"))){
                 touch($this->getDataFolder()."joinmessages.txt");
-                print("[RandomJQMessage] joinmessages.txtを生成しました。\n");
+                print("[AdvancedJoinQuitMessage] joinmessages.txtを生成しました。\n");
             }
             
             if (!file_exists(($this->getDataFolder()."quitmessages.txt"))){
                 touch($this->getDataFolder()."quitmessages.txt");
-                print("[RandomJQMessage] quitmessages.txtを生成しました。\n");
+                print("[AdvancedJoinQuitMessage] quitmessages.txtを生成しました。\n");
             }
         }
           
         public function onJoin(PlayerJoinEvent $event) {
-            $main = new Main();
+            $player = $event->getPlayer();
             // ファイル読み込み
             $joinarray = file($this->getDataFolder()."joinmessages.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             
@@ -44,12 +44,12 @@
             }
 
             $jm_number = mt_rand(1, count($joinarray)) - 1;
-            $JoinMessage = $main->MessageReplacer($joinarray[$jm_number]);
+            $JoinMessage = $this->MessageReplacer($joinarray[$jm_number], $player);
             $event->setJoinMessage($JoinMessage);
         }
 
         public function onQuit(PlayerQuitEvent $event) {
-            $main = new Main();
+            $player = $event->getPlayer();
             // ファイル読み込み
             $quitarray = file($this->getDataFolder()."quitmessages.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             
@@ -58,13 +58,12 @@
             }
 
             $qm_number = mt_rand(1, count($quitarray)) - 1;
-            $QuitMessage = $main->MessageReplacer($quitarray[$qm_number]);
+            $QuitMessage = $this->MessageReplacer($quitarray[$qm_number], $player);
             $event->setQuitMessage($QuitMessage);
         }
 
-        public function MessageReplacer($string) {
-            $main = new Main();
-            $main->Timezone();
+        public function MessageReplacer($string, $player) {
+            $this->Timezone();
             
             $name = $player->getName();
             $year4 = date("Y");         //4桁の年 (例:2020)
@@ -81,25 +80,36 @@
             $minute = date("i");        //先頭に0を付ける分 (例: 03, 30)
             $second = date("s");        //先頭に0を付ける秒 (例: 03, 50)
 
-            $string = str_replace("%yyyy", $string, $year4);
-            $string = str_replace("%yy", $string, $year2);
-            $string = str_replace("%mm", $string, $month);
-            $string = str_replace("%m", $string, $month_nozero);
-            $string = str_replace("%dd", $string, $day);
-            $string = str_replace("%d", $string, $day_nozero);
-            $string = str_replace("%hh24", $string, $hour24);
-            $string = str_replace("%hh12", $string, $hour12);
-            $string = str_replace("%h24", $string, $hour24_nozero);
-            $string = str_replace("%h12", $string, $hour12_nozero);
-            $string = str_replace("%mm", $string, $minute);
-            $string = str_replace("%ss", $string, $second);
+            $replace_table = array(
+                "%player"=>$name,
+
+                "%year"=>$year4,
+                "%yea"=>$year2,
+                "%month"=>$month,
+                "%mont"=>$month_nozero,
+                "%day"=>$day,
+                "%da"=>$day_nozero,
+                "%hour24"=>$hour24,
+                "%hour12"=>$hour12,
+                "%hou24"=>$hour24_nozero,
+                "%hou12"=>$hour12_nozero,
+                "%minute"=>$minute,
+                "%second"=>$second,
+            );
+
+            $search = array_keys($replace_table);
+            $replace = array_values($replace_table);
+
+            $replaced_string = str_replace($search, $replace, $string);
+
+            return $replaced_string;
         }
         public function Timezone() {
             $config = new Config($this->getDataFolder()."config.yml", Config::YAML);
             $timezone = $config->get("timezone");
 
             if ($timezone == null){
-                date_default_timezone_set("UTF");
+                date_default_timezone_set("Etc/GMT+0");
             }
 
             switch ($timezone) {
@@ -107,9 +117,9 @@
                     date_default_timezone_set("Asia/Tokyo");
                     break;
                 
-                case 'UTF':
+                case 'GMT+0':
                 default:
-                    date_default_timezone_set("UTF");
+                    date_default_timezone_set("Etc/GMT+0");
                     break;
             }
 
