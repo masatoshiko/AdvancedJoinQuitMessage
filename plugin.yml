@@ -1,7 +1,7 @@
-name: RandomJQMessage
-main: masatoshiko\RandomJQMessage\main
-version: 1.0.1
+name: AdvancedJoinQuitMessage
+main: masatoshiko\AdvancedJoinQuitMessage\main
+version: 1.1
 api:
 - 3.0.0
-description: 入室・退出のメッセージを変更できるプラグインです
+description: プレイヤーがサーバーに入室・退室した時に表示されるメッセージをランダムに表示したり、日付を表示したりできます。
 author: masatoshiko
